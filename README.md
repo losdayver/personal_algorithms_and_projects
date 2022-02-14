@@ -1,1 +1,1 @@
-# personal_algorithms_and_projects
+# Здесь будут лежать проекты для университета
