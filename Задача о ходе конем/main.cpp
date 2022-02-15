@@ -3,7 +3,7 @@ using namespace std;
 
 const int X_SIZE = 5;
 const int Y_SIZE = 5;
-int board[Y_SIZE][X_SIZE];
+int board[X_SIZE][Y_SIZE];
 
 struct Point{
 	int x;
