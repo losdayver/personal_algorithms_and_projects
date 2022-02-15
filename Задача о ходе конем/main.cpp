@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
 
-const int X_SIZE = 5;
-const int Y_SIZE = 5;
+const int X_SIZE = 8;
+const int Y_SIZE = 8;
 int board[X_SIZE][Y_SIZE];
 
 struct Point{
@@ -37,7 +37,7 @@ struct Point{
 
 Point moves[8] = { Point(1, 2), Point(-1, 2), Point(2, 1), Point(-2, 1),
                    Point(1, -2), Point(-1, -2), Point(2, -1), Point(-2, -1)};
-int move_order[8] = {7,6,5,4,3, 2,1,0};
+//int move_order[8] = {7,6,5,4,3, 2,1,0};
 int start_x = X_SIZE/2;
 int start_y = Y_SIZE/2;
 
@@ -53,18 +53,20 @@ void print_board(Point k){
 	}
 }
 
-bool flag = false;
+int* arrange_moves_by_priority(Point move_here);
+bool finished_statement = false;
 void move_knight(Point last_move, int move_number = 1){
+	int* move_priority = arrange_moves_by_priority(last_move);
 	for (int i = 0; i < 8; i++){
-		Point move_here = last_move + moves[i];
+		Point move_here = last_move + moves[move_priority[i]];
 
 		if (move_here.test_in_bounds() && !move_here.test_board_occupied()){ // проверка, что клетка, на которую пойдет конь не занята
 			board[move_here.x][move_here.y] = 1; // на доске ставится 1
 
 			move_knight(move_here, move_number+1);
 
-			if (flag || move_number == X_SIZE * Y_SIZE-1) {
-				flag = true;
+			if (finished_statement || move_number == X_SIZE * Y_SIZE - 1) {
+				finished_statement = true;
 				print_board(move_here);
 				board[move_here.x][move_here.y] = 0;
 				cout << "algorithm move: " << move_number << endl << endl;
@@ -73,6 +75,37 @@ void move_knight(Point last_move, int move_number = 1){
 			board[move_here.x][move_here.y] = 0;
 		}
 	}
+}
+
+int* arrange_moves_by_priority(Point move_here){
+	int allowed_moves_for_each_move[8];
+	int* result = new int[8];
+	for (int i = 0; i < 8; i++){
+		result[i] = i;
+		int allowed_moves = 0;
+		for (int j = 0; j < 8; j++){
+			if ((move_here + moves[i]).test_in_bounds() && !(move_here + moves[i]).test_board_occupied())
+				allowed_moves++;
+		}
+		allowed_moves_for_each_move[i] = allowed_moves;
+	}
+	bool flag = false;
+	while (!flag){
+		flag = true;
+		for (int i = 0; i < 7; i++){
+			if (allowed_moves_for_each_move[i] < allowed_moves_for_each_move[i+1]) {
+				flag = false;
+				allowed_moves_for_each_move[i] += allowed_moves_for_each_move[i+1];
+				allowed_moves_for_each_move[i+1] = allowed_moves_for_each_move[i] - allowed_moves_for_each_move[i+1];
+				allowed_moves_for_each_move[i] -= allowed_moves_for_each_move[i+1];
+
+				result[i] += result[i+1];
+				result[i+1] = result[i] - result[i+1];
+				result[i] -= result[i+1];
+			} else { flag = true; }
+		}
+	}
+	return result;
 }
 
 int main(){
