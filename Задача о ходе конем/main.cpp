@@ -38,8 +38,8 @@ struct Point{
 Point moves[8] = { Point(1, 2), Point(-1, 2), Point(2, 1), Point(-2, 1),
                    Point(1, -2), Point(-1, -2), Point(2, -1), Point(-2, -1)};
 //int move_order[8] = {7,6,5,4,3, 2,1,0};
-int start_x = X_SIZE/2;
-int start_y = Y_SIZE/2;
+int start_x = 5;
+int start_y = 2;
 
 void print_board(Point k){
 	for (int i = 0; i < Y_SIZE; i++){
@@ -53,6 +53,7 @@ void print_board(Point k){
 	}
 }
 
+int biggest_move_number = 0;
 int* arrange_moves_by_priority(Point move_here);
 bool finished_statement = false;
 void move_knight(Point last_move, int move_number = 1){
@@ -61,9 +62,15 @@ void move_knight(Point last_move, int move_number = 1){
 		Point move_here = last_move + moves[move_priority[i]];
 
 		if (move_here.test_in_bounds() && !move_here.test_board_occupied()){ // проверка, что клетка, на которую пойдет конь не занята
+			if (move_number > biggest_move_number){
+				biggest_move_number=move_number;
+				cout << "move encountoured: " << biggest_move_number << endl;
+			}
+
 			board[move_here.x][move_here.y] = 1; // на доске ставится 1
 
 			move_knight(move_here, move_number+1);
+
 
 			if (finished_statement || move_number == X_SIZE * Y_SIZE - 1) {
 				finished_statement = true;
