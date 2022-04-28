@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
-project(___)
+project(Queens)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(___ main.cpp)
+add_executable(Queens main.cpp)

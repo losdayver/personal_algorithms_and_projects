@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
 
-const int X_SIZE = 8;
-const int Y_SIZE = 8;
+const int X_SIZE = 6;
+const int Y_SIZE = 6;
 int board[X_SIZE][Y_SIZE];
 
 struct Point{
@@ -37,7 +37,7 @@ struct Point{
 
 Point moves[8] = { Point(1, 2), Point(-1, 2), Point(2, 1), Point(-2, 1),
                    Point(1, -2), Point(-1, -2), Point(2, -1), Point(-2, -1)};
-//int move_order[8] = {7,6,5,4,3, 2,1,0};
+int move_order[8] = {7,6,5,4,3, 2,1,0};
 int start_x = 5;
 int start_y = 2;
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 const int n = 8;
@@ -93,19 +94,6 @@ void place_queen(const Point q = Point(0, 0), int i = 1){
 	}
 }
 
-void draw_board(Point q){
-	for (int y = 0; y < n; y++) {
-		for (int x = 0; x < n; x++) {
-			if (Point(x,y) == q)
-				cout << "Q";
-			else if (board[x][y] == 0)
-				cout << ".";
-			else cout << board[x][y];
-		}
-		cout << endl;
-	}
-}
-
 void draw_final_board(){
 	for (int y = 0; y < n; y++){
 		for (int x = 0; x < n; x++){
@@ -117,6 +105,8 @@ void draw_final_board(){
 }
 
 int main() {
+	auto start = clock();
+
 	for (int y = 0; y < n; y++)
 		for (int x = 0; x < n; x++) {
 			board[x][y] = 0;
@@ -125,6 +115,11 @@ int main() {
 
 	place_queen();
 	draw_final_board();
+	cout << endl;
+
+	auto end = clock();
+
+	cout << "time passed: " << end - start;
 
 	return 0;
 }
