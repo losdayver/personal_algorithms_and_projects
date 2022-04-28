@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 const int X_SIZE = 6;
@@ -116,10 +117,16 @@ int* arrange_moves_by_priority(Point move_here){
 }
 
 int main(){
+	auto start = clock();
+
 	for (int i = 0; i < Y_SIZE; i++)
 		for (int j = 0; j < X_SIZE; j++)
 			board[j][i] = 0;
 
 	board[start_x][start_y] = 1;
 	move_knight(Point(start_x, start_y));
+
+	auto end = clock();
+
+	cout << "time enlapsed: " << end - start;
 }
