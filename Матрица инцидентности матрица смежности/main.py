@@ -4,7 +4,7 @@ def print_matrix(matrix):
     for i in matrix:
         row = '('
         for j in i:
-            if j != -1: row += ' '
+            if j >= 0: row += ' '
             row += str(j)
         print(row+' )')
     print()
@@ -44,24 +44,27 @@ def generate_adjacency_matrix(incidence_matrix:np.ndarray):
         flag = True
         row = -1
         column = -1
+        value = 0
         for j, j_c in zip(i, range(incidence_matrix.shape[1])):
             if flag and j != 0:
+                value = j
                 row = j_c
                 flag = False
             elif not flag and j != 0:
+                value = j
                 column = j_c
 
         if row != -1 and column != -1:
-            adjacency_matrix[row, column] = 1
-            adjacency_matrix[column, row] = -1
+            adjacency_matrix[row, column] = -value
+            adjacency_matrix[column, row] = value
         elif row != -1: adjacency_matrix[row, row] = 1
 
     return adjacency_matrix
 
 adjacency_matrix = np.array(
     [(1 ,1 ,0 ,0 ,1 ),
-     (-1,0 ,-1,0 ,1 ),
-     (0 ,1 ,0 ,-1,0 ),
+     (-1,0 ,-5,0 ,1 ),
+     (0 ,5 ,0 ,-1,0 ),
      (0 ,0 ,1 ,0 ,1 ),
      (-1,-1,0 ,1 ,0 )]
 )
