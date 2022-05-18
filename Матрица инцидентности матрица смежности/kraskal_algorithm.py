@@ -1,7 +1,7 @@
 import pygame as pg
 import random
 import math
-random.seed(6)
+random.seed(9)
 
 resolution = [800, 600]
 margin = 100
@@ -92,7 +92,9 @@ while not end_flag:
 pg.init()
 screen = pg.display.set_mode(resolution)
 
-my_font = pg.font.SysFont('Comic Sans MS', 30)
+my_font = pg.font.SysFont('Comic Sans MS', 10)
+
+screen.fill([255, 225, 255])
 
 for l in Line.lines:
     pg.draw.line(screen, [0,255,0], l.point1.screen_location, l.point2.screen_location, 3)
@@ -124,7 +126,7 @@ while 1:
                     break
         else: locked_on_point.screen_location = pg.mouse.get_pos()
 
-        screen.fill([0, 0, 0])
+        screen.fill([255, 225, 255])
 
         for l in Line.lines:
             pg.draw.line(screen, [0, 255, 0], l.point1.screen_location, l.point2.screen_location, 3)
