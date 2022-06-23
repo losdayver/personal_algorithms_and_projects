@@ -1,17 +1,19 @@
 import pygame
 import random
 
-random.seed(3)
+random.seed(9)
 
 pygame.init()
 SCREEN = pygame.display.set_mode((800, 600))
+pygame.display.set_caption('Гамильтонов цикл Олег Жмелев')
+margin = 100
 
 class Vertex:
     num_vertices = 0
     list_vertices = []
     def __init__(self, adjecent_vertices:list = []):
-        self.coords = random.randint(0, SCREEN.get_width()), \
-                      random.randint(0, SCREEN.get_height())
+        self.coords = random.randint(margin, SCREEN.get_width()-margin), \
+                      random.randint(margin, SCREEN.get_height()-margin)
 
         self.id = Vertex.num_vertices
         Vertex.num_vertices += 1
@@ -72,7 +74,7 @@ for vertex in hamilton_stack:
 
 SCREEN.fill((255,255,255))
 
-font1 = pygame.font.SysFont('arial', 10, False, False)
+font1 = pygame.font.SysFont('arial', 20, False, False)
 
 for vertex in Vertex.list_vertices:
     text = font1.render(str(vertex.id), False, (0,0,255))
@@ -82,6 +84,8 @@ for vertex in Vertex.list_vertices:
         color=(0,0,255),
         center=vertex.coords,
         radius=10)
+
+    SCREEN.blit(text, (vertex.coords[0]+10, vertex.coords[1]+5))
 
     for other in vertex.adjecent_vertices:
         pygame.draw.line(surface=SCREEN,
@@ -113,22 +117,3 @@ while 1:
     for event in events:
         if event.type == pygame.QUIT:
             quit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
